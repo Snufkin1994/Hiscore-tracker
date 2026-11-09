@@ -1,0 +1,110 @@
+---
+title: "Item prices"
+author: "Eigenvalue"
+date: "2026-05-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+
+library(tidyverse)
+library(rvest)
+library(chromote)
+library(purrr)
+library(glue)
+library(gt)
+library(magrittr)
+library(ggpubr)
+library(zoo)
+
+```
+
+
+```{r list_of_items, echo=FALSE , message=FALSE}
+
+list_of_items <- c("vial_water","dragon_bones","blankrune","naturerune" ,
+                   "irit_leaf","3dose1energy","3dose2energy","iron_knife",
+                   "avantoe","harralander","gold_bar","emerald",
+                   "ring_of_dueling_8","ranarr_weed","kwuarm","mcannonball",
+                   "iron_ore","coal","iron_bar","steel_bar",
+                   "yew_logs" , "chocolate_dust","mortmyremushroom","eye_of_newt",
+                   "lantadyme","dwarf_weed","cadantine","amulet_of_glory_4",
+                   "dragonhide_green", "dragonhide_blue","unidentified_guam")
+```
+
+
+```{r funksjon}
+plot_list = list()
+
+for(i in 1:length(list_of_items)){
+  item_name = list_of_items[i] 
+  
+  files_in_folder <- list.files(glue("PRICE_DATA/{item_name}/")) 
+  
+  list_item_df = list()
+  for(j in 1:length(files_in_folder)){
+    list_item_df[[j]] = readRDS(glue("PRICE_DATA/{item_name}/{files_in_folder[j]}"))
+  }
+  alle_item_dfs <- bind_rows(list_item_df, .id = "column_label") %>% 
+    arrange(desc(date)) %>% 
+    select(-column_label) 
+  
+  p <- ggplot(alle_item_dfs) +
+  geom_point( aes(x = date, y = pris , size = antall) ) +
+  geom_smooth(aes(x = date, y = pris ),method='lm' , se = FALSE ) +
+  # geom_line(aes(x = date, y =  rollmean(
+  #   pris, 10, align = "right") )) + 
+  ggtitle(glue("{item_name} price with\nlinear regression")) +
+  ylab("GP PRICE") + 
+  labs(size = "number of\nitems\ntraded")
+  
+  plot_list[[i]] = p
+  
+}
+
+```
+
+
+
+```{r plots1}
+ggarrange(plot_list[[1]],plot_list[[2]],plot_list[[3]],plot_list[[4]])
+
+```
+
+<br><br><br>
+
+```{r plots2}
+ggarrange(plot_list[[5]],plot_list[[6]],plot_list[[7]],plot_list[[8]])
+```
+
+<br><br><br>
+Herb prices
+```{r plots3, fig.height= 10}
+ggarrange(plot_list[[5]],plot_list[[9]], plot_list[[10]],plot_list[[15]],
+          plot_list[[25]],plot_list[[26]], plot_list[[27]], plot_list[[31]],
+           nrow = 4 , ncol = 2)
+```
+
+
+<br><br><br>
+Crafting prices
+```{r plots4, fig.height= 10}
+ggarrange(plot_list[[11]],plot_list[[12]], plot_list[[13]],plot_list[[29]],
+          plot_list[[30]],nrow = 4 , ncol = 2)
+```
+
+
+<br><br><br>
+Bars and Ore
+```{r Bars_and_Ore_plots, fig.height= 8}
+ggarrange(plot_list[[17]],plot_list[[18]], plot_list[[19]],plot_list[[20]],
+          plot_list[[16]] , nrow = 3 , ncol = 2)
+```
+
+
+
+
+
