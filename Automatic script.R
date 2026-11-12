@@ -5,11 +5,11 @@
 library(taskscheduleR)
 
 # Create a task scheduler job that runs the script every hour
-taskscheduler_create(
-  taskname = "Hello World Hourly",
-  rscript = "hello_world.R",
-  schedule = "0 * * * *"
-)
+# taskscheduler_create(
+#   taskname = "Hello World Hourly",
+#   rscript = "hello_world.R",
+#   schedule = "0 * * * *"
+# )
 
 
 

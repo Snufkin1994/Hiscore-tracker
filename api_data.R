@@ -27,11 +27,11 @@ api_JSON
 
 df_skills <- api_JSON$skills
 
-write_rds(df_skills,glue("C:/HC_worlds/Hiscore tracker/Data/Skills/{today}.rds"))
+write_rds(df_skills,glue("C:/HC_worlds/Hiscore_tracker/Data/Skills/{today}.rds"))
 
 df_activites <- api_JSON$activities
 
-write_rds(df_activites,glue("C:/HC_worlds/Hiscore tracker/Data/Activities/{today}.rds"))
+write_rds(df_activites,glue("C:/HC_worlds/Hiscore_tracker/Data/Activities/{today}.rds"))
 
 
 

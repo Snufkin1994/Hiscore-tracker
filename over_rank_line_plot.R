@@ -37,10 +37,3 @@ ggplot(data = df , aes(x = date, y = overall_rank)) +
   geom_point()
 
 
-ggplot(economics, aes(date, unemploy)) + geom_line()
-
-
-#test
-
-#ny test :)
-
