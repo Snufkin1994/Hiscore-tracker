@@ -33,7 +33,19 @@ df
 
 
 ggplot(data = df , aes(x = date, y = overall_rank)) + 
-  geom_line(aes(group = 1)) + 
-  geom_point()
+  geom_line(aes(group = 1), linewidth = 1.5, colour = "red") +
+  theme_bw() + ylab("Overall rank") 
+
+
+ggsave("Overall rank.png", width = 6, height = 8)
+
+
+
+
+
+
+
+
+
 
 

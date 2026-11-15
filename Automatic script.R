@@ -13,12 +13,12 @@ library(taskscheduleR)
 
 
 
-myscript <- "C:/HC_worlds/Hiscore tracker/api_data.r"
+myscript <- "C:/HC_worlds/Hiscore_tracker/api_data.r"
 cat(readLines(myscript), sep = "\n")
 
 
 runon <- format(Sys.time() + 62, "%H:%M")
-taskscheduler_create(taskname = "test", rscript = myscript, 
+taskscheduler_create(taskname = "test3", rscript = myscript, 
                      schedule = "ONCE", starttime = runon)
 
 
