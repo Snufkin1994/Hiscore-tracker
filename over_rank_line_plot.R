@@ -22,6 +22,7 @@ overall_ranks_and_dates <- function(data_list = data_list){
     df <- rbind(df,denne_df2)
   }
   
+  df$date <- as.Date(df$date)
   
   return(df)
   
@@ -32,9 +33,13 @@ df <- overall_ranks_and_dates(data_list = data_list)
 df
 
 
+
+
 ggplot(data = df , aes(x = date, y = overall_rank)) + 
   geom_line(aes(group = 1), linewidth = 1.5, colour = "red") +
-  theme_bw() + ylab("Overall rank") 
+  geom_point() +
+  theme_bw() + ylab("Overall rank") +
+  scale_x_date()
 
 
 ggsave("Overall rank.png", width = 6, height = 8)
